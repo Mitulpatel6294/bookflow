@@ -28,7 +28,7 @@ export default function Dashboard() {
     );
 }
 
-function StatCard({ title, value, color }: { title: string, value: number, color: string }) {
+function StatCard({ title, value, color }) {
     return (
         <div className="bg-white rounded-lg shadow p-6 flex items-center space-x-4 border border-gray-100">
             <div className={`w-12 h-12 rounded-full ${color} flex items-center justify-center text-white font-bold`}>

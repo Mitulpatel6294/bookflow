@@ -21,7 +21,6 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('token');
-            // Check if we are not already on the login page to avoid loops
             if (window.location.pathname !== '/admin/login') {
                 window.location.href = '/admin/login';
             }

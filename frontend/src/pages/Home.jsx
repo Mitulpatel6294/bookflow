@@ -14,12 +14,9 @@ const bookingSchema = z.object({
     message: z.string().optional()
 });
 
-type BookingFormData = z.infer<typeof bookingSchema>;
-
 export default function Home() {
-    const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
+    const [message, setMessage] = useState(null);
 
-    // Fetch Settings
     const { data, isLoading } = useQuery({
         queryKey: ['settings'],
         queryFn: async () => {
@@ -38,13 +35,13 @@ export default function Home() {
         working_days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     };
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<BookingFormData>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(bookingSchema)
     });
 
     const mutation = useMutation({
-        mutationFn: async (data: BookingFormData) => {
-            const res = await api.post('/appointments', data);
+        mutationFn: async (formData) => {
+            const res = await api.post('/appointments', formData);
             return res.data;
         },
         onSuccess: () => {
@@ -62,7 +59,6 @@ export default function Home() {
 
     return (
         <div>
-            {/* Hero Section */}
             <section className="bg-primary-600 text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Welcome to {settings.business_name}</h1>
@@ -72,9 +68,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Content Area */}
             <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-12">
-                {/* Contact Info */}
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">Business Details</h2>
                     <div className="space-y-4 text-gray-600">
@@ -91,7 +85,6 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Booking Form */}
                 <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">Book an Appointment</h2>
                     
@@ -101,7 +94,7 @@ export default function Home() {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
+                    <form onSubmit={handleSubmit((d) => mutation.mutate(d))} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                             <input {...register('name')} className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500 outline-none" />

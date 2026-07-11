@@ -23,7 +23,7 @@ export default function Settings() {
     }, [data, reset]);
 
     const mutation = useMutation({
-        mutationFn: async (formData: any) => {
+        mutationFn: async (formData) => {
             const res = await api.put('/settings', formData);
             return res.data;
         },

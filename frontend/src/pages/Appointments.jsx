@@ -13,12 +13,12 @@ export default function Appointments() {
             const res = await api.get('/appointments', {
                 params: { search, status: statusFilter }
             });
-            return res.data.data; // Assuming paginated structure { data: [...] } from Laravel Resource
+            return res.data.data;
         }
     });
 
     const updateStatusMut = useMutation({
-        mutationFn: async ({ id, status }: { id: number, status: string }) => {
+        mutationFn: async ({ id, status }) => {
             await api.patch(`/appointments/${id}`, { status });
         },
         onSuccess: () => {
@@ -27,7 +27,7 @@ export default function Appointments() {
     });
 
     const deleteMut = useMutation({
-        mutationFn: async (id: number) => {
+        mutationFn: async (id) => {
             await api.delete(`/appointments/${id}`);
         },
         onSuccess: () => {
@@ -76,7 +76,7 @@ export default function Appointments() {
                         </thead>
                         <tbody>
                             {data?.data?.length > 0 ? (
-                                data.data.map((apt: any) => (
+                                data.data.map((apt) => (
                                     <tr key={apt.id} className="border-b border-gray-100 hover:bg-gray-50 text-sm">
                                         <td className="p-4">
                                             <p className="font-medium text-gray-900">{apt.name}</p>

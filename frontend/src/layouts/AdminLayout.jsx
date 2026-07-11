@@ -16,7 +16,6 @@ export default function AdminLayout() {
 
     return (
         <div className="min-h-screen flex bg-gray-100">
-            {/* Sidebar */}
             <aside className="w-64 bg-white shadow-md flex flex-col">
                 <div className="p-4 border-b">
                     <h2 className="text-xl font-bold text-gray-800">Admin Panel</h2>
@@ -30,8 +29,6 @@ export default function AdminLayout() {
                     <button onClick={handleLogout} className="w-full px-4 py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors">Logout</button>
                 </div>
             </aside>
-
-            {/* Main Content */}
             <main className="flex-1 p-8 overflow-y-auto">
                 <Outlet />
             </main>
